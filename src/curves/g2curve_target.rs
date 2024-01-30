@@ -1,4 +1,4 @@
-use ark_bn254::G2Affine;
+use ark_bls12_381::G2Affine;
 use itertools::Itertools;
 use plonky2::{
     field::extension::Extendable,
@@ -134,7 +134,7 @@ impl<F: RichField + Extendable<D>, const D: usize> G2Target<F, D> {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::G2Affine;
+    use ark_bls12_381::G2Affine;
     use ark_std::UniformRand;
     use plonky2::{
         field::goldilocks_field::GoldilocksField,

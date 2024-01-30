@@ -1,5 +1,5 @@
-pub mod bn254base;
-pub mod bn254scalar;
+pub mod bls12_381base;
+pub mod bls12_381scalar;
 pub mod debug_tools;
 pub mod fq12_target;
 pub mod fq2_target;

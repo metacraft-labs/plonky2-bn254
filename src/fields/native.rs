@@ -1,6 +1,6 @@
 use std::ops::{Add, Mul};
 
-use ark_bn254::{Fq, Fq12, Fq2, Fq6};
+use ark_bls12_381::{Fq, Fq12, Fq2, Fq6};
 use ark_ff::{BigInt, PrimeField};
 use ark_std::Zero;
 use num_bigint::BigUint;
@@ -152,7 +152,7 @@ impl Mul for MyFq12 {
 }
 
 pub fn from_biguint_to_fq(x: BigUint) -> Fq {
-    let x: BigInt<4> = x.try_into().unwrap();
+    let x: BigInt<6> = x.try_into().unwrap();
     Fq::from_bigint(x).unwrap()
 }
 
@@ -240,7 +240,7 @@ pub fn get_naf(mut exp: Vec<u64>) -> Vec<i8> {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::Fq12;
+    use ark_bls12_381::Fq12;
     use ark_std::UniformRand;
 
     use crate::fields::native::MyFq12;

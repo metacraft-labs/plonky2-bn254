@@ -1,4 +1,4 @@
-use ark_bn254::Fq;
+use ark_bls12_381::Fq;
 use itertools::Itertools;
 use num_bigint::BigUint;
 use plonky2::{
@@ -104,7 +104,7 @@ pub fn restore_fq(values_hex: String) -> Fq {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::{Fq, G2Affine};
+    use ark_bls12_381::{Fq, G2Affine};
     use ark_ec::AffineRepr;
     use ark_std::UniformRand;
     use num_bigint::BigUint;

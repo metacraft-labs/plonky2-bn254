@@ -1,4 +1,4 @@
-use ark_bn254::{Fq, Fq12};
+use ark_bls12_381::{Fq, Fq12};
 use ark_ff::Field;
 use itertools::Itertools;
 use num_bigint::BigUint;
@@ -314,7 +314,7 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq12Target<F, D> {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::{Fq, Fq12};
+    use ark_bls12_381::{Fq, Fq12};
     use ark_ff::Field;
     use ark_std::UniformRand;
     use num_bigint::BigUint;

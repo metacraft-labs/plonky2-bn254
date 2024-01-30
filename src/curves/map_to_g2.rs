@@ -1,4 +1,4 @@
-use ark_bn254::{Fq, Fq2, G2Affine};
+use ark_bls12_381::{Fq, Fq2, G2Affine};
 use ark_ff::Field;
 use ark_ff::MontFp;
 use ark_std::Zero;
@@ -161,7 +161,7 @@ pub fn map_to_g2_without_cofactor_mul_circuit<F: RichField + Extendable<D>, cons
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::Fq2;
+    use ark_bls12_381::Fq2;
     use ark_std::UniformRand;
     use plonky2::{
         field::goldilocks_field::GoldilocksField,

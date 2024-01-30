@@ -1,4 +1,4 @@
-use ark_bn254::Fr;
+use ark_bls12_381::Fr;
 use itertools::Itertools;
 use num::Zero;
 use num_bigint::BigUint;
@@ -18,7 +18,7 @@ use plonky2_ecdsa::gadgets::{
 use plonky2_u32::gadgets::{arithmetic_u32::U32Target, range_check::range_check_u32_circuit};
 use std::marker::PhantomData;
 
-use super::bn254scalar::Bn254Scalar;
+use super::bls12_381scalar::Bn254Scalar;
 
 #[derive(Clone, Debug)]
 pub struct FrTarget<F: RichField + Extendable<D>, const D: usize> {
@@ -226,7 +226,7 @@ impl<F: RichField + Extendable<D>, const D: usize> FrTarget<F, D> {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::Fr;
+    use ark_bls12_381::Fr;
     use num_traits::*;
     use plonky2::{
         field::goldilocks_field::GoldilocksField,

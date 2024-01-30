@@ -1,4 +1,4 @@
-use ark_bn254::G1Affine;
+use ark_bls12_381::G1Affine;
 use ark_std::UniformRand;
 use itertools::Itertools;
 use plonky2::{
@@ -163,7 +163,7 @@ impl<F: RichField + Extendable<D>, const D: usize> G1Target<F, D> {
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::{Fr, G1Affine};
+    use ark_bls12_381::{Fr, G1Affine};
     use ark_std::UniformRand;
     use plonky2::{
         field::goldilocks_field::GoldilocksField,

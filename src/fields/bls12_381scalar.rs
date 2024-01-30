@@ -3,7 +3,7 @@ use core::hash::{Hash, Hasher};
 use core::iter::{Product, Sum};
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-use ark_bn254::Fr;
+use ark_bls12_381::Fr;
 use itertools::Itertools;
 use num::bigint::BigUint;
 use num::{Integer, One};
@@ -15,7 +15,7 @@ use plonky2::field::types::{Field, PrimeField, Sample};
 ///
 /// Its order is
 /// ```ignore
-/// P = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+/// P = 52435875175126190479447740508185965837690552500527637822603658699938581184513
 /// ```
 #[derive(Copy, Clone, Serialize, Deserialize)]
 pub struct Bn254Scalar(pub [u64; 4]);
@@ -81,10 +81,11 @@ impl Field for Bn254Scalar {
     const ONE: Self = Self([1, 0, 0, 0]);
     const TWO: Self = Self([2, 0, 0, 0]);
     const NEG_ONE: Self = Self([
-        0x43E1F593F0000000,
-        0x2833E84879B97091,
-        0xB85045B68181585D,
-        0x30644E72E131A029,
+        // Scalar field(R) minus one
+        0xFFFFFFFF00000000,
+        0x53BDA402FFFE5BFE,
+        0x3339D80809A1D805,
+        0x73EDA753299D7D48,
     ]);
 
     const TWO_ADICITY: usize = 28;
@@ -100,14 +101,15 @@ impl Field for Bn254Scalar {
         0x402D111E41112ED4,
         0xE0A7EB8EF62ABC,
         0x2A3C09F0A58A7E85,
-    ]);
+    ]); // -> WHY?
 
-    const BITS: usize = 254;
+    const BITS: usize = 381;
 
     fn order() -> BigUint {
         BigUint::from_slice(&[
-            0xF0000001, 0x43E1F593, 0x79B97091, 0x2833E848, 0x8181585D, 0xB85045B6, 0xE131A029,
-            0x30644E72,
+            // Scalar field R
+            0x00000001, 0xFFFFFFFF, 0xFFFE5BFE, 0x53BDA402, 0x09A1D805, 0x3339D808, 0x299D7D48,
+            0x73EDA753,
         ])
     }
     fn characteristic() -> BigUint {

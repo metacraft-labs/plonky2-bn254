@@ -1,4 +1,4 @@
-use ark_bn254::Fq;
+use ark_bls12_381::Fq;
 use itertools::Itertools;
 use num::{One, Zero};
 use num_bigint::BigUint;
@@ -21,7 +21,7 @@ use plonky2_u32::gadgets::{arithmetic_u32::U32Target, range_check::range_check_u
 use std::marker::PhantomData;
 
 use crate::fields::{
-    bn254base::Bn254Base,
+    bls12_381base::Bls12_381Base,
     native::{from_biguint_to_fq, sgn0_fq},
 };
 
@@ -29,7 +29,7 @@ use super::native::get_naf;
 
 #[derive(Clone, Debug)]
 pub struct FqTarget<F: RichField + Extendable<D>, const D: usize> {
-    pub(crate) target: NonNativeTarget<Bn254Base>,
+    pub(crate) target: NonNativeTarget<Bls12_381Base>,
     _marker: PhantomData<F>,
 }
 
@@ -42,7 +42,7 @@ impl<F: RichField + Extendable<D>, const D: usize> FqTarget<F, D> {
         }
     }
 
-    pub fn to_nonnative_target(&self) -> NonNativeTarget<Bn254Base> {
+    pub fn to_nonnative_target(&self) -> NonNativeTarget<Bls12_381Base> {
         self.target.clone()
     }
 
@@ -78,7 +78,7 @@ impl<F: RichField + Extendable<D>, const D: usize> FqTarget<F, D> {
         8
     }
 
-    pub fn new(value: NonNativeTarget<Bn254Base>) -> Self {
+    pub fn new(value: NonNativeTarget<Bls12_381Base>) -> Self {
         Self {
             target: value,
             _marker: PhantomData,
@@ -132,7 +132,7 @@ impl<F: RichField + Extendable<D>, const D: usize> FqTarget<F, D> {
     }
 
     pub fn from_bool(builder: &mut CircuitBuilder<F, D>, b: &BoolTarget) -> Self {
-        let target = builder.bool_to_nonnative::<Bn254Base>(&b);
+        let target = builder.bool_to_nonnative::<Bls12_381Base>(&b);
         Self {
             target,
             _marker: PhantomData,
@@ -272,7 +272,7 @@ impl<F: RichField + Extendable<D>, const D: usize> FqTarget<F, D> {
         let limbs = input.iter().cloned().map(|a| U32Target(a)).collect_vec();
         range_check_u32_circuit(builder, limbs.clone());
         let biguint = BigUintTarget { limbs };
-        let target = builder.biguint_to_nonnative::<Bn254Base>(&biguint);
+        let target = builder.biguint_to_nonnative::<Bls12_381Base>(&biguint);
         FqTarget {
             target,
             _marker: PhantomData,
@@ -338,7 +338,7 @@ impl<F: RichField + Extendable<D>, const D: usize> SimpleGenerator<F> for FqSqrt
 
 #[cfg(test)]
 mod tests {
-    use ark_bn254::Fq;
+    use ark_bls12_381::Fq;
     use ark_ff::Field;
     use ark_std::UniformRand;
     use ark_std::Zero;
