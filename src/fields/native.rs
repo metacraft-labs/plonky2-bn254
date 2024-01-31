@@ -128,7 +128,7 @@ impl Mul for MyFq12 {
         let mut out_coeffs: Vec<Fq> = Vec::with_capacity(12);
         for i in 0..6 {
             if i < 5 {
-                let coeff: Fq = a0b0_minus_a1b1[i] + Fq::from(9) * a0b0_minus_a1b1[i + 6]
+                let coeff: Fq = a0b0_minus_a1b1[i] + Fq::from(1) * a0b0_minus_a1b1[i + 6]
                     - a0b1_plus_a1b0[i + 6];
                 out_coeffs.push(coeff);
             } else {
@@ -139,7 +139,7 @@ impl Mul for MyFq12 {
             if i < 5 {
                 let coeff: Fq = a0b1_plus_a1b0[i]
                     + a0b0_minus_a1b1[i + 6]
-                    + Fq::from(9) * a0b1_plus_a1b0[i + 6];
+                    + Fq::from(1) * a0b1_plus_a1b0[i + 6];
                 out_coeffs.push(coeff);
             } else {
                 out_coeffs.push(a0b1_plus_a1b0[i].clone());
