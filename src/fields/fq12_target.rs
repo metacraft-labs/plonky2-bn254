@@ -287,7 +287,7 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq12Target<F, D> {
     }
 
     pub fn from_vec(builder: &mut CircuitBuilder<F, D>, input: &[Target]) -> Self {
-        let num_limbs = 8;
+        let num_limbs = 12;
         assert_eq!(input.len(), 12 * num_limbs);
         let coeffs = input
             .iter()
@@ -337,7 +337,7 @@ mod tests {
     fn test_from_to_vec() {
         let rng = &mut rand::thread_rng();
         let a = Fq12::rand(rng);
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = Fq12Target::constant(&mut builder, a);
 
@@ -367,7 +367,7 @@ mod tests {
         let b = Fq12::rand(rng);
         let c_expected = a * b;
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = Fq12Target::constant(&mut builder, a);
         let b_t = Fq12Target::constant(&mut builder, b);
@@ -387,7 +387,7 @@ mod tests {
         let x: Fq12 = Fq12::rand(rng);
         let inv_x_expected = x.inverse().unwrap();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let x_t = Fq12Target::constant(&mut builder, x);
         let inv_x_t = x_t.inv(&mut builder);

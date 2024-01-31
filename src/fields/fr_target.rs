@@ -242,7 +242,7 @@ mod tests {
     fn test_fr_bit_decompose() {
         let x = Fr::one();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config.clone());
         let x_t = FrTarget::constant(&mut builder, x);
         let bits = x_t.to_bits(&mut builder);
