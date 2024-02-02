@@ -191,7 +191,7 @@ mod tests {
         let b = G1Affine::rand(rng);
         let c_expected: G1Affine = (a + b).into();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = G1Target::constant(&mut builder, a);
         let b_t = G1Target::constant(&mut builder, b);
@@ -211,7 +211,7 @@ mod tests {
         let a = G1Affine::rand(rng);
         let c_expected: G1Affine = (a + a).into();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = G1Target::constant(&mut builder, a);
         let c_t = a_t.double(&mut builder);
@@ -235,7 +235,7 @@ mod tests {
         let five_p: G1Affine = (p + p + p + p + p).into();
         assert_eq!(five_p, r_expected);
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let p_t = G1Target::constant(&mut builder, p);
         let n_t = FrTarget::constant(&mut builder, n);
@@ -255,7 +255,7 @@ mod tests {
         let mut rng = rand::rngs::StdRng::seed_from_u64(42);
         let rando = G1Affine::rand(&mut rng);
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let rando_t = G1Target::constant(&mut builder, rando);
         let neg_rando = G1Target::constant(&mut builder, -rando);
@@ -293,7 +293,7 @@ mod tests {
         let n: u64 = 13131241945145145;
         let a = Fr::from(n);
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = FrTarget::constant(&mut builder, a);
         let bits_t = builder.split_nonnative_to_bits(&a_t.target);

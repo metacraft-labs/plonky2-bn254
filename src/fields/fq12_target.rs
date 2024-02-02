@@ -152,14 +152,14 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq12Target<F, D> {
             a0b1_plus_a1b0.push(a0b1_plus_a1b0_entry);
         }
 
-        let const_nine = FqTarget::constant(builder, Fq::from(9));
+        let const_one = FqTarget::constant(builder, Fq::from(1));
         let mut out_coeffs: Vec<FqTarget<F, D>> = Vec::with_capacity(12);
         for i in 0..6 {
             if i < 5 {
                 // let coeff: Fq = a0b0_minus_a1b1[i] + Fq::from(9) * a0b0_minus_a1b1[i + 6]
                 //     - a0b1_plus_a1b0[i + 6];
                 let term0 = a0b0_minus_a1b1[i].clone();
-                let term1 = a0b0_minus_a1b1[i + 6].mul(builder, &const_nine);
+                let term1 = a0b0_minus_a1b1[i + 6].mul(builder, &const_one);
                 let term2 = a0b1_plus_a1b0[i + 6].neg(builder);
                 let term0_plus_term1 = term0.add(builder, &term1);
                 let coeff = term0_plus_term1.add(builder, &term2);
@@ -175,7 +175,7 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq12Target<F, D> {
                 //     + Fq::from(9) * a0b1_plus_a1b0[i + 6];
                 let term0 = a0b1_plus_a1b0[i].clone();
                 let term1 = a0b0_minus_a1b1[i + 6].clone();
-                let term2 = a0b1_plus_a1b0[i + 6].mul(builder, &const_nine);
+                let term2 = a0b1_plus_a1b0[i + 6].mul(builder, &const_one);
                 let term0_plus_term1 = term0.add(builder, &term1);
                 let coeff = term0_plus_term1.add(builder, &term2);
                 out_coeffs.push(coeff);
@@ -287,7 +287,7 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq12Target<F, D> {
     }
 
     pub fn from_vec(builder: &mut CircuitBuilder<F, D>, input: &[Target]) -> Self {
-        let num_limbs = 8;
+        let num_limbs = 12;
         assert_eq!(input.len(), 12 * num_limbs);
         let coeffs = input
             .iter()
@@ -337,7 +337,7 @@ mod tests {
     fn test_from_to_vec() {
         let rng = &mut rand::thread_rng();
         let a = Fq12::rand(rng);
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = Fq12Target::constant(&mut builder, a);
 
@@ -367,7 +367,7 @@ mod tests {
         let b = Fq12::rand(rng);
         let c_expected = a * b;
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = Fq12Target::constant(&mut builder, a);
         let b_t = Fq12Target::constant(&mut builder, b);
@@ -387,7 +387,7 @@ mod tests {
         let x: Fq12 = Fq12::rand(rng);
         let inv_x_expected = x.inverse().unwrap();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let x_t = Fq12Target::constant(&mut builder, x);
         let inv_x_t = x_t.inv(&mut builder);

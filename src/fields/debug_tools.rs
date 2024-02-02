@@ -129,7 +129,7 @@ mod tests {
     fn test_debug_print() {
         let gen = G2Affine::generator();
         let x0 = gen.x.c0;
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let x0_t = FqTarget::constant(&mut builder, x0);
         print_fq_target(&mut builder, &x0_t, "x0_t".to_string());

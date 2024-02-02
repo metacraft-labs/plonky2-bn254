@@ -192,7 +192,7 @@ mod tests {
         let x_expected = p_expected.x;
         let y_expected = p_expected.y;
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = Fq2Target::constant(&mut builder, a);
         let p_t = map_to_g2_without_cofactor_mul_circuit(&mut builder, &a_t);

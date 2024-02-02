@@ -158,7 +158,7 @@ mod tests {
         let b = G2Affine::rand(rng);
         let c_expected: G2Affine = (a + b).into();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = G2Target::constant(&mut builder, a);
         let b_t = G2Target::constant(&mut builder, b);
@@ -178,7 +178,7 @@ mod tests {
         let a = G2Affine::rand(rng);
         let c_expected: G2Affine = (a + a).into();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = G2Target::constant(&mut builder, a);
         let c_t = a_t.double(&mut builder);
@@ -197,7 +197,7 @@ mod tests {
         let a = G2Affine::rand(rng);
         let c_expected: G2Affine = (-a).into();
 
-        let config = CircuitConfig::standard_ecc_config();
+        let config = CircuitConfig::pairing_config();
         let mut builder = CircuitBuilder::<F, D>::new(config);
         let a_t = G2Target::constant(&mut builder, a);
         let c_t = a_t.neg(&mut builder);
