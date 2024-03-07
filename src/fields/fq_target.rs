@@ -131,6 +131,14 @@ impl<F: RichField + Extendable<D>, const D: usize> FqTarget<F, D> {
         }
     }
 
+    pub fn fp_constant(builder: &mut CircuitBuilder<F, D>, c: Bls12_381Base) -> Self {
+        let target = builder.constant_nonnative(c.into());
+        Self {
+            target,
+            _marker: PhantomData,
+        }
+    }
+
     pub fn from_bool(builder: &mut CircuitBuilder<F, D>, b: &BoolTarget) -> Self {
         let target = builder.bool_to_nonnative::<Bls12_381Base>(&b);
         Self {
