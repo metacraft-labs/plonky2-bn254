@@ -221,6 +221,24 @@ impl<F: RichField + Extendable<D>, const D: usize> Fq2Target<F, D> {
         }
     }
 
+    pub fn square(&self, builder: &mut CircuitBuilder<F, D>) -> Self {
+        self.mul(builder, &self)
+    }
+
+    pub fn double(&self, builder: &mut CircuitBuilder<F, D>) -> Self {
+        self.add(builder, &self)
+    }
+
+    pub fn mul_assign_by_fp(
+        &self,
+        builder: &mut CircuitBuilder<F, D>,
+        other: FqTarget<F, D>,
+    ) -> Self {
+        let c0 = self.coeffs[0].clone().mul(builder, &other);
+        let c1 = self.coeffs[1].clone().mul(builder, &other);
+        Self { coeffs: [c0, c1] }
+    }
+
     pub fn neg_conjugate(&self, builder: &mut CircuitBuilder<F, D>) -> Self {
         let c0 = self.coeffs[0].clone();
         let c1 = self.coeffs[1].clone();
